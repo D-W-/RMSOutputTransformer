@@ -1,0 +1,9 @@
+out/
+lib/
+.idea/
+
+*.maude
+maude*
+temp*
+error*
+*.iml
