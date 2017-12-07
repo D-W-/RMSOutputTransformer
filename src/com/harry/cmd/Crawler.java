@@ -2,8 +2,11 @@ package com.harry.cmd;
 
 import com.harry.core.Transformer;
 import com.harry.util.Execute;
+import com.harry.util.IO;
 
 import java.io.*;
+
+import static com.harry.util.IO.getWriter;
 
 /**
  * Tsmart-build-capture: The build capture component of Tsmart platform
@@ -12,34 +15,14 @@ import java.io.*;
  */
 public class Crawler {
 
-    public BufferedReader getReader(String filename){
-        File inFile = new File(filename);
-        BufferedReader result = null;
-        try {
-            result = new BufferedReader(new InputStreamReader(new FileInputStream(inFile)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
-    public BufferedWriter getWriter(String filename) {
-        File outFile = new File(filename);
-        BufferedWriter result = null;
-        try {
-            result = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     public void crawl(String filename) {
         String command = "./maude.linux64 real-time-maude.maude RMS.maude " + filename + " > temp";
         Execute.executeCommand(command);
 
-        BufferedReader bufferedReader = getReader("temp");
-        BufferedWriter bufferedWriter = getWriter("error.json");
+        BufferedReader bufferedReader = IO.getReader("temp");
+        BufferedWriter bufferedWriter = IO.getWriter("error.json");
         boolean writeLine = false;
         String line = null;
         try {
